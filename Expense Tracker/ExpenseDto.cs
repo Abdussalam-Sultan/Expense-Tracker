@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Expense_Tracker
+{
+    public class ExpenseDto
+    {
+        public decimal Amount { get; set; }
+        public Category Category { get; set; }
+        public string? Note { get; set; }
+    }
+}
