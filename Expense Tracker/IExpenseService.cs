@@ -14,7 +14,7 @@ namespace Expense_Tracker
 
         void GetSummary();
 
-        void SaveToFile();
+        void SaveToFile(Expense expense);
         void LoadFromFile();
 
         void SearchExpenses();

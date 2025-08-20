@@ -32,7 +32,7 @@ namespace Expense_Tracker
                         expenseService.SearchExpenses();
                         break;
                     case "5":
-                        expenseService.SaveToFile();
+                        //expenseService.SaveToFile();
                         break;
                     case "6":
                         expenseService.LoadFromFile();

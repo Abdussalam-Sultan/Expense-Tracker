@@ -42,5 +42,17 @@ namespace Expense_Tracker
 4.Utilities 5.Health    6.Education
 5.Shopping  6.Other");
         }
+        public static void Failure(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
+        public static void Success(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
     }
 }

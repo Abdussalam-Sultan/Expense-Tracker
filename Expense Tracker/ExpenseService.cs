@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Expense_Tracker
@@ -15,6 +17,7 @@ namespace Expense_Tracker
             Expense expense = new Expense(expenseDto);
             expenses.Add(expense);
             Console.WriteLine("Expense added successfully!");
+            SaveToFile(expense);
             Console.ReadLine();
         }
         public void ViewExpenses()
@@ -31,15 +34,23 @@ namespace Expense_Tracker
             Console.WriteLine($"Total expenses: {totalAmount:C}");
             Console.ReadLine();
         }
-        public void SaveToFile()
+        public void SaveToFile(Expense expense)
         {
-            Console.WriteLine("Saving expenses to file...");
-            Console.ReadLine();
-        }
+            string path = "C:\\Users\\DELL\\OneDrive\\Desktop\\person.json";
+            //foreach (var expense in expenses)
+            {
+                string json = JsonSerializer.Serialize(expense) + "\n";
+                File.AppendAllText(path, json);
+            }
+            }
         public void LoadFromFile()
         {
-            Console.WriteLine("Loading expenses from file...");
-            Console.ReadLine();
+            string loadedJson = File.ReadAllText("C:\\Users\\DELL\\OneDrive\\Desktop\\person.json");
+            Expense loaded = JsonSerializer.Deserialize<Expense>(loadedJson);
+            //foreach (var expense in loaded)
+            //{
+            //    Console.WriteLine($"Amount: {expense.Amount:C}, Category: {expense.Category}, Note: {expense.Note} Date: {expense.Date}");
+            //}
         }
         public void SearchExpenses()
         {

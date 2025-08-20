@@ -11,14 +11,14 @@ namespace Expense_Tracker
         public int Id { get; set; }
         public decimal Amount { get; set; }
         public Category Category { get; set; }
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
         public string Note { get; set; }
         public Expense(ExpenseDto expenseDto)
         {
-            Id = new Random().Next(1, 1000); // Simple ID generation for demonstration
+            Id = new Random().Next(1, 1000);
             Amount = expenseDto.Amount;
             Category = expenseDto.Category;
-            Date = DateTime.Now; // Set to current date
+            Date = DateOnly.MinValue;
             Note = expenseDto.Note ?? string.Empty; // Default to empty string if null
         }
 
