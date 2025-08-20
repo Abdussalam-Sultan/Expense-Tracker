@@ -1,0 +1,16 @@
+[
+  {
+    "Id": 981,
+    "Amount": 4000,
+    "Category": 2,
+    "Date": "0001-01-01",
+    "Note": "To school for the week"
+  },
+  {
+    "Id": 722,
+    "Amount": 300,
+    "Category": 5,
+    "Date": "0001-01-01",
+    "Note": "Umbrella and raincoat"
+  }
+]

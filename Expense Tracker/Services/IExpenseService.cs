@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Expense_Tracker
+namespace Expense_Tracker.Services
 {
     public interface IExpenseService
     {
@@ -15,7 +15,7 @@ namespace Expense_Tracker
         void GetSummary();
 
         void SaveToFile(Expense expense);
-        void LoadFromFile();
+         List<Expense> LoadFromFile();
 
         void SearchExpenses();
     }

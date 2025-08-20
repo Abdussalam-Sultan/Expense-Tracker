@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Expense_Tracker.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace Expense_Tracker
         public Category Category { get; set; }
         public DateOnly Date { get; set; }
         public string Note { get; set; }
+        public Expense() { }
         public Expense(ExpenseDto expenseDto)
         {
             Id = new Random().Next(1, 1000);

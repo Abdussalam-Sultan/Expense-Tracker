@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Expense_Tracker.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,23 +7,22 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Expense_Tracker
+namespace Expense_Tracker.Services
 {
     public class ExpenseService : IExpenseService
     {
-        static List<Expense> expenses = new List<Expense>();
+        private static string path = "C:\\Users\\DELL\\source\\repos\\Expense Tracker\\Expense Tracker\\expenses.json";
         public void AddExpense()
         {
             var expenseDto = GetInput();
             Expense expense = new Expense(expenseDto);
-            expenses.Add(expense);
             Console.WriteLine("Expense added successfully!");
             SaveToFile(expense);
             Console.ReadLine();
         }
         public void ViewExpenses()
         {
-            foreach (var expense in expenses)
+            foreach (var expense in LoadFromFile())
             {
                 Console.WriteLine($"Amount: {expense.Amount:C}, Category: {expense.Category}, Note: {expense.Note} Date: {expense.Date}");
             }
@@ -30,33 +30,41 @@ namespace Expense_Tracker
         }
         public void GetSummary()
         {
-            decimal totalAmount = expenses.Sum(e => e.Amount);
-            Console.WriteLine($"Total expenses: {totalAmount:C}");
+            decimal totalAmount = LoadFromFile().Sum(e => e.Amount);
+            Console.WriteLine($"Total number of expenses: {LoadFromFile().Count}");
+            Console.WriteLine($"Expenses by category: ");
+            foreach (Category category in Enum.GetValues(typeof(Category)))
+            {
+
+                List<Expense> exp = LoadFromFile().FindAll(e => e.Category == category);
+                Console.WriteLine($"{category}: Count[{exp.Count}] Amount[{exp.Sum(e => e.Amount)}]");
+                Console.WriteLine("--------------------------------------");
+            }
+            Console.WriteLine($"Total number of expenses by date: ");
+
+            Console.WriteLine($"Total amount spent: {totalAmount:C}");
             Console.ReadLine();
         }
-        public void SaveToFile(Expense expense)
+        public void SaveToFile(Expense ex)
         {
-            string path = "C:\\Users\\DELL\\OneDrive\\Desktop\\person.json";
-            //foreach (var expense in expenses)
-            {
-                string json = JsonSerializer.Serialize(expense) + "\n";
-                File.AppendAllText(path, json);
-            }
-            }
-        public void LoadFromFile()
+            var expense = LoadFromFile();
+            expense.Add(ex);
+            string json = JsonSerializer.Serialize(expense, new JsonSerializerOptions { WriteIndented = true});
+            File.WriteAllText(path, json);
+        }
+        public List<Expense> LoadFromFile()
         {
-            string loadedJson = File.ReadAllText("C:\\Users\\DELL\\OneDrive\\Desktop\\person.json");
-            Expense loaded = JsonSerializer.Deserialize<Expense>(loadedJson);
-            //foreach (var expense in loaded)
-            //{
-            //    Console.WriteLine($"Amount: {expense.Amount:C}, Category: {expense.Category}, Note: {expense.Note} Date: {expense.Date}");
-            //}
+            if (!File.Exists(path))
+                return new List<Expense>();
+            string loadedJson = File.ReadAllText(path);
+            List<Expense>? expens = JsonSerializer.Deserialize<List<Expense>>(loadedJson);
+            return expens;
         }
         public void SearchExpenses()
         {
             List<Expense> _expense = new List<Expense>();
             Console.Write("Search by Category(1) or Date(2): ");
-            string choice = Console.ReadLine();
+            string? choice = Console.ReadLine();
             switch (choice)
             {
                 case "1":
@@ -100,13 +108,14 @@ namespace Expense_Tracker
             };
             return expenseDto;
         }
-        public static List<Expense> GetByCategory(Category category)
+        public List<Expense> GetByCategory(Category category)
         {
-            return expenses.FindAll(cat => cat.Category.Equals(category)).ToList();
+
+            return LoadFromFile().FindAll(cat => cat.Category.Equals(category)).ToList();
         }
-        public static List<Expense> GetByDate(DateTime date)
+        public List<Expense> GetByDate(DateTime date)
         {
-            return expenses.FindAll(d => d.Date.Equals(date)).ToList();
+            return LoadFromFile().FindAll(d => d.Date.Equals(date)).ToList();
         }
     }
 }

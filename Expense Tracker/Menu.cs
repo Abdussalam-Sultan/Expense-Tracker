@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Expense_Tracker.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,12 +32,6 @@ namespace Expense_Tracker
                     case "4":
                         expenseService.SearchExpenses();
                         break;
-                    case "5":
-                        //expenseService.SaveToFile();
-                        break;
-                    case "6":
-                        expenseService.LoadFromFile();
-                        break;
                     case "0":
                         isRunning = false;
                         break;
@@ -55,8 +50,6 @@ namespace Expense_Tracker
             Console.WriteLine("2. View Expenses");
             Console.WriteLine("3. Get Summary of Expenses");
             Console.WriteLine("4. Search Expenses");
-            Console.WriteLine("5. Save Expenses to File");
-            Console.WriteLine("6. Load Expenses from File");
             Console.WriteLine("0. Exit");
             Console.Write("Please enter your choice: ");
         }
