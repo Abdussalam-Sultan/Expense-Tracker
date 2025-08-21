@@ -12,5 +12,26 @@
     "Category": 5,
     "Date": "0001-01-01",
     "Note": "Umbrella and raincoat"
+  },
+  {
+    "Id": 919,
+    "Amount": 4000,
+    "Category": 4,
+    "Date": "0001-01-01",
+    "Note": "Broken fan fix"
+  },
+  {
+    "Id": 517,
+    "Amount": 1000,
+    "Category": 4,
+    "Date": "0001-01-01",
+    "Note": "Phone repair"
+  },
+  {
+    "Id": 9,
+    "Amount": 100,
+    "Category": 6,
+    "Date": "0001-01-01",
+    "Note": "Lab project fee"
   }
 ]

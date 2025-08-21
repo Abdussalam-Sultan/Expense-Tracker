@@ -12,35 +12,44 @@ namespace Expense_Tracker
         private static IExpenseService expenseService = new ExpenseService();
         public static void MainMenu()
         {
-
-            bool isRunning = true;
-            while (isRunning)
+            try
             {
-                PrintMenu();
-                string choice = Console.ReadLine();
-                switch (choice)
+
+                bool isRunning = true;
+                while (isRunning)
                 {
-                    case "1":
-                        expenseService.AddExpense();
-                        break;
-                    case "2":
-                        expenseService.ViewExpenses();
-                        break;
-                    case "3":
-                        expenseService.GetSummary();
-                        break;
-                    case "4":
-                        expenseService.SearchExpenses();
-                        break;
-                    case "0":
-                        isRunning = false;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice, please try again.");
-                        break;
+                    PrintMenu();
+                    string choice = Console.ReadLine();
+                    switch (choice)
+                    {
+                        case "1":
+                            expenseService.AddExpense();
+                            break;
+                        case "2":
+                            expenseService.ViewExpenses();
+                            break;
+                        case "3":
+                            expenseService.GetSummary();
+                            break;
+                        case "4":
+                            expenseService.SearchExpenses();
+                            break;
+                        case "0":
+                            isRunning = false;
+                            break;
+                        default:
+                            Helpers.Failure("Invalid choice, please try again.");
+                            break;
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                Helpers.Failure(ex.Message);
+                Console.WriteLine("Click enter to continue...");
+                Console.ReadLine();
+                MainMenu();
+            }
         }
         public static void PrintMenu()
         {

@@ -16,8 +16,9 @@ namespace Expense_Tracker.Services
         {
             var expenseDto = GetInput();
             Expense expense = new Expense(expenseDto);
-            Console.WriteLine("Expense added successfully!");
+            Helpers.Success("Expense added successfully!");
             SaveToFile(expense);
+            Console.WriteLine("Click anywhere to continue...");
             Console.ReadLine();
         }
         public void ViewExpenses()
@@ -26,6 +27,7 @@ namespace Expense_Tracker.Services
             {
                 Console.WriteLine($"Amount: {expense.Amount:C}, Category: {expense.Category}, Note: {expense.Note} Date: {expense.Date}");
             }
+            Console.WriteLine("Click enter to continue...");
             Console.ReadLine();
         }
         public void GetSummary()
@@ -43,6 +45,7 @@ namespace Expense_Tracker.Services
             Console.WriteLine($"Total number of expenses by date: ");
 
             Console.WriteLine($"Total amount spent: {totalAmount:C}");
+            Console.WriteLine("Click enter to continue...");
             Console.ReadLine();
         }
         public void SaveToFile(Expense ex)
@@ -57,8 +60,7 @@ namespace Expense_Tracker.Services
             if (!File.Exists(path))
                 return new List<Expense>();
             string loadedJson = File.ReadAllText(path);
-            List<Expense>? expens = JsonSerializer.Deserialize<List<Expense>>(loadedJson);
-            return expens;
+            return JsonSerializer.Deserialize<List<Expense>>(loadedJson);
         }
         public void SearchExpenses()
         {
@@ -77,9 +79,6 @@ namespace Expense_Tracker.Services
                     DateTime.TryParse(Console.ReadLine(), out DateTime date);
                     _expense = GetByDate(date);
                     break;
-                default:
-                    Console.WriteLine("Invalid Input!");
-                    break;
             }
             if(_expense.Count > 0)
             {
@@ -88,7 +87,11 @@ namespace Expense_Tracker.Services
                     Console.WriteLine($"Amount: {expense.Amount:C}, Category: {expense.Category}, Note: {expense.Note} Date: {expense.Date}");
                 }
             }
-            else { Console.WriteLine("No expense found!"); }
+            else 
+            { 
+                Helpers.Failure("No expense found!");
+                Console.WriteLine("Click enter to continue...");
+            }
 
             Console.ReadLine();
         }

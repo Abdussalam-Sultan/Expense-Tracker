@@ -9,6 +9,7 @@ namespace Expense_Tracker
 {
     public class Expense
     {
+        private static int Counter = 0;
         public int Id { get; set; }
         public decimal Amount { get; set; }
         public Category Category { get; set; }
